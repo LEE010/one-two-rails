@@ -1,0 +1,12 @@
+<header>
+  <nav class="navbar navbar-expand-xl navbar-dark bg-dark fixed-top d-flex justify-content-between">
+    <%=link_to fa_icon("camera") , root_path, class:"nav-item" %>
+    <%= link_to 'One-Two', root_path, class: "navbar-brand" %>
+    <% if !user_signed_in? %>
+      <%=link_to fa_icon("user-plus"), new_user_session_path, class:"nav-item" %>
+    <% else %>
+      <%=link_to fa_icon("user-plus"), destroy_user_session_path, class:"nav-item",
+        method: :delete, data: {confirm: '로그아웃 하시겠습니까?'} %>
+    <% end %>
+  </nav>
+</header>

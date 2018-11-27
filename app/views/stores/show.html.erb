@@ -1,0 +1,63 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @store.name %>
+</p>
+
+<p>
+  <strong>Regist number:</strong>
+  <%= @store.regist_number %>
+</p>
+
+<p>
+  <strong>Postcode:</strong>
+  <%= @store.postcode %>
+</p>
+
+<p>
+  <strong>Address:</strong>
+  <%= @store.address %>
+</p>
+
+<p>
+  <strong>Address2:</strong>
+  <%= @store.address2 %>
+</p>
+
+<p>
+  <strong>Phone number:</strong>
+  <%= @store.phone_number %>
+</p>
+
+<p>
+  <strong>Account number:</strong>
+  <%= @store.account_number %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @store.user.email %>
+</p>
+
+<div class="container">
+  <h2>Products</h2>
+
+    <div class="card-deck row">
+      <% @store.products.each do |p| %>
+        <div class="card">
+          <h5 class="card-header"><%= p.store.name %></h5>
+          <%= image_tag p.image if p.image%>
+          <div class="card-body">
+            <h5 class="card-title"><%= p.name %></h5>
+          </div>
+          <div class="card-footer">
+            <small class="text-muted"><%= p.price %></small>
+          </div>
+        </div>
+      <% end %>
+    </div>
+</div>
+
+<%= link_to 'Edit', edit_store_path(@store) %> |
+<%= link_to 'Back', stores_path %>

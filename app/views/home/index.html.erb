@@ -1,0 +1,37 @@
+<h1>Home#index</h1>
+<p>Find me in app/views/home/index.html.erb</p>
+<%= link_to 'store_index',stores_path %><br>
+<%= link_to 'profile_index',profiles_path %><br>
+<%= link_to 'product_index',products_path %><br>
+<br>
+
+<script>
+
+  $('#use-option1').change(function() {
+    $('#use-option2').prop('disabled',! this.checked);
+
+    if($('#use-option2').prop('checked')){
+      $('#use-option2').prop('checked',false);
+    }
+  });
+
+  function addOption() {
+    var length = $("#options > input").length;
+
+    if(length >= 5){
+      alert("옵션의 개수는 5개를 넘을 수 없습니다.");
+    }else{
+    $("#options").append('<input type="text" class="form-control" id="option1-' + length + '">');
+    }
+  };
+
+  function removeOption() {
+    var length = $("#options > input").length;
+    if(length <= 0){
+      alert("지울수 있는 항목이 없습니다.")
+    } else {
+    $("#options > input").last().remove();
+    }
+  };
+
+</script>

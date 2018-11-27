@@ -1,0 +1,220 @@
+<%= bootstrap_form_for(product) do |f| %>
+  
+  <div class="field">
+    <%= f.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= f.file_field :image, accept: 'image/jpeg, image/jpg image/png, image/gif' %>
+  </div>
+
+  <div class="field">
+    <%= f.text_field :price %>
+  </div>
+  
+  <%= link_to 'Add-Option', '#', {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window', class: 'btn btn-primary' } %>
+  
+  
+  <div id="modal-window" class="modal hide fade" role="dialog" aria-labelledby="Add-Option" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      
+      <div class="modal-content">
+        
+        <div class="modal-header">
+          <h4 class="modal-title" id="myModalLabel">Add-Option</h4>
+          <button type="button" class="close" data-dismiss="modal">x</button>
+        </div>
+        
+        <div class="modal-body">
+          
+          <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" id="check-option1">
+            <label class="form-check-label" for="use-option1">option1</label>
+          </div>
+          
+          <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" id="check-option2" disabled>
+            <label class="form-check-label" for="use-option2">option2</label>
+          </div>
+          
+          <div id="options">
+            <div id='option1' style="display: none;">
+              <h3>option1</h3>
+              <a class="btn btn-primary" onclick="addOption(this)">add-option </a>
+              <a class="btn btn-primary" onclick="removeOption(this)">remove-option</a>
+              
+            </div>
+            
+            <div id='option2' style="display: none;">
+              <h3>option2</h3>
+              <a class="btn btn-primary" onclick="addOption(this)">add-option </a>
+              <a class="btn btn-primary" onclick="removeOption(this)">remove-option</a>
+              
+            </div>
+            
+          </div>
+        </div>
+        
+        <div class="modal-footer">
+          <a class="btn btn-primary" onclick='create_option()' data-dismiss="modal">Save</a>
+        </div>
+        
+      </div>
+      
+    </div>
+  </div>
+
+  <div class='field row' id='options_attributes'>
+    <%= f.fields_for :options do |option| %>
+      <%= option.text_field :option1, class: "col" %>
+      <%= option.text_field :option2, class: "col" %>
+      <%= option.text_field :stock, class: "col" %>
+      <%= option.text_field :code, class: "col" %>
+    <% end %>
+  </div>
+  
+  <div class="field">
+    <%= f.text_area :info, class: 'tinymce',rows: 15%>
+    <%= tinymce %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+
+<% end %>
+
+<script>
+
+  $('#check-option1').change(function() {
+    
+    $('#check-option2').prop('disabled',! this.checked);
+    if($('#check-option2').prop('checked')){
+      $('#check-option2').prop('checked',false);
+      $(option2).hide();
+      $(option2).children("input").remove();
+    }
+    
+    if ( $(option1).css("display") == "none" ) $(option1).show(); 
+    else{
+      $(option1).hide();
+      $(option1).children("input").remove();
+    }
+    
+  });
+  
+  $('#check-option2').change(function() {
+    
+    if ($('#check-option2').prop('checked')) $(option2).show(); 
+    else{
+      $(option2).hide();
+      $(option2).children("input").remove();
+    } 
+  });
+  
+
+  function addOption(item) {
+    var option_div = $(item).closest('div');
+    var length = option_div.children('input').length;
+
+    if(length >= 5){
+      alert("옵션의 개수는 5개를 넘을 수 없습니다.");
+    }else{
+      // option_div.append('<input type="text" class="form-control" id="'option_div +'-'+ length + '">');
+      option_div.append($("<input/>", {
+        type:'text',
+        class: 'form-control',
+        id: option_div.attr('id')+ '-' + length,
+      }))
+    }
+  };
+  
+  function removeOption(item) {
+    var option_inputs = $(item).closest('div').children('input');
+    var length = option_inputs.length;
+    
+    if(length <= 0){
+      alert("지울수 있는 항목이 없습니다.")
+    } else {
+      option_inputs.last().remove();
+    }
+  };
+  
+  function create_option() {
+   var field = $("#options_attributes");
+   var option1_length = $("#option1").children('input').length;
+   var option2_length = $("#option2").children('input').length;
+   var count = 0;
+   
+   field.empty();
+   for(var i = 0; i < option1_length; i++){
+     
+     if(option2_length > 0){
+       for(var j = 0; j < option2_length; j++){
+         field.append($('<div/>',{
+           class: 'form-group row',
+         }));
+     
+         field.children(".form-group").last().append($('<input/>',{
+            class: "form-control col",
+            type: "text",
+            name: "product[options_attributes][" + count + "][option1]",
+            id: "product_options_attributes_"+ count +"_option1",
+            value: $('#option1-'+ i).val(),
+            readonly: true }));
+            
+        field.children(".form-group").last().append($('<input/>',{
+          class: "form-control col",
+          type: "text",
+          name: "product[options_attributes][" + count + "][option2]",
+          id: "product_options_attributes_"+ count +"_option2",
+          value: $('#option2-'+ j).val(),
+          readonly: true }));
+          
+        field.children(".form-group").last().append($('<input/>',{
+          class: "form-control col",
+          type: "text",
+          name: "product[options_attributes][" + count + "][stock]",
+          id: "product_options_attributes_"+ count +"_stock",
+          placeholder:"stock"}));
+        
+        field.children(".form-group").last().append($('<input/>',{
+          class: "form-control col",
+          type: "text",
+          name: "product[options_attributes][" + count + "][code]",
+          id: "product_options_attributes_"+ count +"code",
+          placeholder:"code"}));
+        count += 1;
+       }
+     }else{
+       field.append($('<div/>',{class: 'form-group row'}));
+     
+       field.children(".form-group").last().append($('<input/>',{
+          class: "form-control col",
+          type: "text",
+          name: "product[options_attributes][" + count + "][option1]",
+          id: "product_options_attributes_"+ count +"_option1",
+          value: $('#option1-'+ i).val(),
+          readonly: true }));
+          
+       field.children(".form-group").last().append($('<input/>',{
+          class: "form-control col",
+          type: "text",
+          name: "product[options_attributes][" + count + "][stock]",
+          id: "product_options_attributes_"+ count +"_stock",
+          placeholder:"stock"}));
+        
+        field.children(".form-group").last().append($('<input/>',{
+          class: "form-control col",
+          type: "text",
+          name: "product[options_attributes][" + count + "][code]",
+          id: "product_options_attributes_"+ count +"code",
+          placeholder:"code"}));
+        count += 1;
+     }
+    };
+  }
+
+</script>
+<style>
+</style>

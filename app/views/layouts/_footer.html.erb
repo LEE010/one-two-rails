@@ -1,0 +1,16 @@
+<% if user_signed_in? %>
+  <footer>
+    <nav class="navbar fixed-bottom navbar-expand-sm navbar-dark bg-dark d-flex justify-content-around">
+      <a class= "nav-item nav-link" href="/"><%=fa_icon "home"%></a>
+
+      <a class= "nav-item nav-link" href="/posts"><%=fa_icon "search"%></a>
+      <a class= "nav-item nav-link" href="#"><%=fa_icon "plus"%></a>
+      <a class= "nav-item nav-link" href="#"><%=fa_icon "heart"%></a>
+      <% if current_user.profile.nil? %>
+        <%=link_to fa_icon("user"), new_profile_path(current_user.profile), class: "nav-item" %>
+      <% else %>
+        <%=link_to fa_icon("user"), profile_path(current_user.profile), class: "nav-item" %>
+      <% end %>
+    </nav>
+  </footer>
+<% end %>
