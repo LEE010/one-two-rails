@@ -11,6 +11,9 @@ class ProductsController < ApplicationController
   # GET /products/1
   # GET /products/1.json
   def show
+    @options1 = @product.options.select(:option1).distinct
+    @options2 = @product.options.select(:option2).distinct
+    
   end
 
   # GET /products/new
@@ -26,8 +29,7 @@ class ProductsController < ApplicationController
   # POST /products.json
   def create
     @product = current_user.store.products.new(product_params)
-    
-    # debugger
+
     if @product.save
       redirect_to @product, alert: 'Product was successfully created.'
     else

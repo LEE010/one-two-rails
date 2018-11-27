@@ -14,7 +14,7 @@
   
   <%= link_to 'Add-Option', '#', {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window', class: 'btn btn-primary' } %>
   
-  
+  <a class="btn btn-primary" onclick = "no_option()">no_option</a>
   <div id="modal-window" class="modal hide fade" role="dialog" aria-labelledby="Add-Option" aria-hidden="true">
     <div class="modal-dialog" role="document">
       
@@ -64,7 +64,10 @@
     </div>
   </div>
 
-  <div class='field row' id='options_attributes'>
+  <div class='field' id='options_attributes'>
+  </div>
+  
+  <div class='field row'>
     <%= f.fields_for :options do |option| %>
       <%= option.text_field :option1, class: "col" %>
       <%= option.text_field :option2, class: "col" %>
@@ -85,7 +88,6 @@
 <% end %>
 
 <script>
-
   $('#check-option1').change(function() {
     
     $('#check-option2').prop('disabled',! this.checked);
@@ -213,8 +215,42 @@
         count += 1;
      }
     };
-  }
-
+  };
+  function no_option() {
+    var field = $("#options_attributes");
+    
+    field.empty();
+    
+    field.append($('<div/>',{
+           class: 'form-group row',
+         }));
+    
+    field.children(".form-group").last().append($('<input/>',{
+            type: "hidden",
+            name: "product[options_attributes][0][option1]",
+            value: "",
+            readonly: true }));
+    
+    field.children(".form-group").last().append($('<input/>',{
+            type: "hidden",
+            name: "product[options_attributes][0][option2]",
+            value: "",
+            readonly: true }));
+            
+    field.children(".form-group").last().append($('<input/>',{
+          class: "form-control col",
+          type: "text",
+          name: "product[options_attributes][0][stock]",
+          id: "product_options_attributes_0_stock",
+          placeholder:"stock"}));
+        
+    field.children(".form-group").last().append($('<input/>',{
+          class: "form-control col",
+          type: "text",
+          name: "product[options_attributes][0][code]",
+          id: "product_options_attributes_0_code",
+          placeholder:"code"}));
+        count += 1;
+     };
+        
 </script>
-<style>
-</style>
