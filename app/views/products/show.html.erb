@@ -20,7 +20,7 @@
     <input name="product_id" type="hidden" value="<%= @product.id %>">
     <div class="form-row">
       <div class="col">
-        <% unless @options1.count == 0 %>
+        <% if @options1.count > 1 %>
           <select class="custom-select" name="option1">
             <% @options1.each do |o| %>
               <option value="<%= o.option1 %>"><%= o.option1 %></option>
@@ -30,7 +30,7 @@
       </div>
       
       <div class="col">
-        <% unless @options2.count == 0 %>
+        <% if @options2.count > 1 %>
           <select class="custom-select" name="option2">
             <% @options2.each do |o| %>
               <option value="<%= o.option2 %>"><%= o.option2 %></option>

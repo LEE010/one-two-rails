@@ -73,6 +73,9 @@ class ProfilesController < ApplicationController
     end
 
     def has_profile
-      redirect_to profile_url(current_user) if !current_user.profile.nil?
+      if !current_user.profile.nil?
+        redirect_to profile_url(current_user.profile)
+      end
+      
     end
 end
