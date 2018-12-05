@@ -1,0 +1,11 @@
+<ul class="list-group">
+  <% @comments.each do |comment|%>
+    <% unless comment.id == nil %>
+      <li class="list-group-item">
+        <%= comment.comment %>
+        <span><%= link_to fa_icon("pencil"),edit_comment_path(:id => comment.id)%></span>
+        <span><%= link_to fa_icon("trash")%></span>
+      </li>
+    <% end %>
+  <% end %>
+</ul>

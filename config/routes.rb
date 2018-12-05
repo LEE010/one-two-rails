@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :comments, except: [:show]
+
   resources :products
   resources :stores, except: [:destroy]
   resources :profiles, except: [:destroy]

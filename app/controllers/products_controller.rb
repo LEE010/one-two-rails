@@ -11,6 +11,7 @@ class ProductsController < ApplicationController
   # GET /products/1
   # GET /products/1.json
   def show
+    @comments = @product.comments
     @options1 = @product.options.select(:option1).distinct
     @options2 = @product.options.select(:option2).distinct
     
@@ -18,6 +19,7 @@ class ProductsController < ApplicationController
 
   # GET /products/new
   def new
+    debugger
     @product = current_user.store.products.new
   end
 

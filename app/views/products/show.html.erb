@@ -60,3 +60,7 @@
 <%= link_to 'Edit', edit_product_path(@product) %> |
 <%= link_to 'Back', products_path %>
 
+<div class="container" id="profile-commnets">
+  <%= render "comments/new", commentable: @product %>
+  <%= render "comments/index", commentable: @product %>
+</div>
