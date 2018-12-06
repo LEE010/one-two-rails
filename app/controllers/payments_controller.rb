@@ -42,7 +42,8 @@ class PaymentsController < ApplicationController
         pg_token: params[:pg_token],
        }
     begin
-      @res = RestClient.post(url, payload, headers = header)
+      res = RestClient.post(url, payload, headers = header)
+      @res = JSON.parse(res)
     rescue => e
       e.response
     end
