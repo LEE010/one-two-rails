@@ -1,5 +1,6 @@
 class Product < ApplicationRecord
   mount_uploader :image, ProductImgUploader
+  acts_as_commentable
   resourcify
   belongs_to :store
   has_many :options

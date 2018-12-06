@@ -6,14 +6,46 @@
 </p>
 
 <p>
+  <strong>Image:</strong>
+  <%= image_tag @product.image if @product.image %>
+</p>
+
+<p>
   <strong>Price:</strong>
   <%= @product.price %>
 </p>
 
-<p>
-  <strong>Image:</strong>
-  <%= image_tag @product.image if @product.image %>
-</p>
+<div class="input-group input-group-sm">
+  <form action="/cart" method="post">
+    <input name="product_id" type="hidden" value="<%= @product.id %>">
+    <div class="form-row">
+      <div class="col">
+          <select class="custom-select" name="option1">
+            <% @options1.each do |o| %>
+              <option value="<%= o.option1 %>"><%= o.option1 %></option>
+            <% end %>
+          </select>
+
+      </div>
+      
+      <div class="col">
+          <select class="custom-select" name="option2">
+            <% @options2.each do |o| %>
+              <option value="<%= o.option2 %>"><%= o.option2 %></option>
+            <% end %>
+          </select>
+      </div>
+      
+      <div class="col">
+        <input type="text" class="form-control" name="quantity" placeholder ="quantity">
+      </div>
+        
+        
+      <input class="btn btn-primary" type="submit">
+      </div>
+    </div>
+  </form>
+</div>
 
 <p>
   <strong>Info:</strong>
@@ -22,8 +54,13 @@
 
 <p>
   <strong>Store:</strong>
-  <%= @product.store %>
+  <%= @product.store.name %>
 </p>
 
 <%= link_to 'Edit', edit_product_path(@product) %> |
 <%= link_to 'Back', products_path %>
+
+<div class="container" id="profile-commnets">
+  <%= render "comments/new", commentable: @product %>
+  <%= render "comments/index", commentable: @product %>
+</div>

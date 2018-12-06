@@ -1,4 +1,7 @@
 <h1>My Cart</h1>
+
+<%= @cart_items %>
+
 <table class="table">
   <thead>
     <tr>
@@ -13,18 +16,36 @@
   </thead>
 
   <tbody>
-    <% session[:cart].each do |option_id, quantity| %>
+    <% @cart_items.each do |item_id, quantity| %>
       <tr>
-        <% option = Option.find(option_id) %>
-        <td><%= image_tag option.product.image.thumb %></td>
-        <td><%= option.product.name %></td>
-        <td><%= option.product.price %>원</td>
-        <td><%= option.option1 %></td>
-        <td><%= option.option2 %></td>
+        <% item = Option.find(item_id) %>
+        <td><%= image_tag item.product.image.thumb %></td>
+        <td><%= item.product.name %></td>
+        <td><%= item.product.price %>원</td>
+        <td><%= item.option1 %></td>
+        <td><%= item.option2 %></td>
         <td><%= quantity %></td>
-        <td><%= link_to 'Edit', "#" %></td>
-        <td><%= link_to 'Destroy', "#", method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td>
+          <%= link_to fa_icon("pencil"), edit_cart_item_path(item), remote: true, data: { target: 'modalWindow', toggle:'modal'} %>
+        </td>
+        <td>
+          <%= link_to fa_icon("eraser"), destroy_cart_item_path(item), method: :delete, data: { confirm: 'Are you sure?' }%>
+        </td>
       </tr>
     <% end %>
+
   </tbody>
 </table>
+
+<div class="modal fade" id="modalWindow" role="dialog" aria-hidden="true" aria-labelledy="modalWindowLable">
+  <div class="modal-dialog">
+    <div class="modal-content">
+        
+    </div>
+  </div>
+</div>
+
+<div id="payment-info">
+  <%= @total_price %> 원
+  <%= link_to "payment", new_payment_path, class: "btn btn-primary" %> 
+</div>

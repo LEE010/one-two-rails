@@ -2,9 +2,9 @@
 
 <h1>Profiles</h1>
 
-<table>
+<table class="table table-bordred table-striped">
   <thead>
-    <tr>
+    <tr class="text-center">
       <th>Name</th>
       <th>Mobile</th>
       <th>Address</th>
@@ -16,7 +16,7 @@
 
   <tbody>
     <% @profiles.each do |profile| %>
-      <tr>
+      <tr class="text-center">
         <td><%= profile.name %></td>
         <td><%= profile.mobile %></td>
         <td><%= profile.address %> <%= profile.address2 %></td>
