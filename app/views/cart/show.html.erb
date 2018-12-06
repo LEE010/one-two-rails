@@ -44,3 +44,8 @@
     </div>
   </div>
 </div>
+
+<div id="payment-info">
+  <%= @total_price %> 원
+  <%= link_to "payment", new_payment_path, class: "btn btn-primary" %> 
+</div>

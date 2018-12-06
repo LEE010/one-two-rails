@@ -6,6 +6,12 @@ class CartController < ApplicationController
   
   def show
     @cart_items = session[:cart]
+    @total_price = 0
+ 
+    @cart_items.each do |item_id, quantity|
+      item = Option.find(item_id)
+      @total_price += item.product.price.to_i * quantity.to_i
+    end
     
     respond_to do |format|
       format.js
