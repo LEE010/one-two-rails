@@ -1,5 +1,47 @@
 <p id="notice"><%= notice %></p>
 
+<div class="profile-user-info">
+  <div class="row">
+    <div class="user-img col-sm-4 ">
+      <%= image_tag "https://www.thestylease.com/images/user.png" %>
+    </div>
+    
+    <div class="col-sm-8 text-left ">
+      <div>
+        <%= @profile.name %>|<%= link_to "Edit-Profile", edit_profile_path(@profile) , class: "btn btn-sm" %>
+      </div>
+      
+      <div>
+        Post 0<%#= @profile.user.posts.count %>| Follower <%= @profile.user.followers_count %>| Follow <%= @profile.user.follow_count %>
+      </div>
+      <div>
+        <%= @profile.user.email %>
+      </div>
+    </div>
+    
+  </div>
+</div>
+<hr>
+<div class="row profile-user-post">
+  <div class="col-sm-6">
+    <h3>user post</h3>
+    <hr>
+    <img src="https://www.thestylease.com/images/user.png" alt="..." class="img-thumbnail">
+    <img src="https://www.thestylease.com/images/user.png" alt="..." class="img-thumbnail">
+    <img src="https://www.thestylease.com/images/user.png" alt="..." class="img-thumbnail">
+  </div>
+  
+  <div class="col-sm-6">
+    <h3>follewd post</h3>
+    <hr>
+    <img src="https://www.thestylease.com/images/user.png" alt="..." class="img-thumbnail">
+    <img src="https://www.thestylease.com/images/user.png" alt="..." class="img-thumbnail">
+    <img src="https://www.thestylease.com/images/user.png" alt="..." class="img-thumbnail">
+  </div>
+</div>
+
+
+
 <p>
   <strong>Name:</strong>
 
@@ -26,6 +68,7 @@
   <strong>User:</strong>
   <%= @profile.user.email %>
 </p>
+
 
 <%= link_to 'Edit', edit_profile_path(@profile) %> |
 <%= link_to 'Back', profiles_path %>

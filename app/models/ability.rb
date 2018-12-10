@@ -7,11 +7,11 @@ class Ability
       # user ||= User.new # guest user (not logged in)
       if user.has_role? :admin
         can :manage, :all
-      elsif user.has_role? :owner
+      elsif user.has_role? :seller
         can :read, :all
         can [:create, :update], [Profile, Store], user: user
-        can :manage, Product, store: user.store
-        can :manage, Option, product: user.store.product
+        can :manage, [Product, Option], store: user.store
+        # can :manage, Option, product: user.store.products
       else
         can :read, :all
         can [:create, :update], Profile, user: user

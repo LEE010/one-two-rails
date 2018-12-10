@@ -19,7 +19,6 @@ class ProductsController < ApplicationController
 
   # GET /products/new
   def new
-    debugger
     @product = current_user.store.products.new
   end
 

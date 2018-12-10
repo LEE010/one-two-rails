@@ -1,0 +1,64 @@
+@import "rails_bootstrap_forms";
+@import "bootstrap";
+@import "font-awesome";
+@import "home";
+@import "stores";
+@import "products";
+@import "votes";
+@import "profiles";
+// 색상표
+// #ea573d 빨
+// #fbc063 노
+// #64b0bc 초
+// #446699 파
+// #555577 보
+// 
+header{
+  margin-bottom: 8rem;
+}
+
+footer{
+  margin-top: 8rem;
+}
+
+a{
+  color: #000;
+}
+
+.navbar-brand{
+  font-size: 2rem;
+  font-weight: bold;
+  font-family: 'Pacifico', cursive;
+}
+
+.btn{
+    background-color: #ea573d ;
+    color: #fff;
+    &:hover{
+      background-color: #fbc063;
+      color: #fff;
+    }
+}
+
+.card-columns {
+  @include media-breakpoint-only(lg) {
+    column-count: 4;
+  }
+  @include media-breakpoint-only(xl) {
+    column-count: 5;
+  }
+}
+
+#follow{
+  background-color: #ea573d;
+  &:hover{
+    background-color: #446699;
+  }
+}
+
+#unfollow{
+  background-color: #446699;
+  &:hover{
+    background-color: #ea573d;
+  }
+}

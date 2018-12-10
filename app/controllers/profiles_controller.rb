@@ -1,44 +1,46 @@
 class ProfilesController < ApplicationController
-  before_action :set_profile, only: [:show, :edit, :update, :destroy]
-  before_action :has_profile, only: [:new, :create]
-  before_action :non_profile, except: [:new, :create, :index]
+  before_action :set_profile, only: [:show, :edit, :update]
+  
   load_and_authorize_resource
   # GET /profiles
   # GET /profiles.json
   def index
     @profiles = Profile.all
   end
-
+  
   # GET /profiles/1
   # GET /profiles/1.json
+  def my_profile
+    @profile = current_user.profile
+  end
+  
   def show
   end
-
-  # GET /profiles/new
-  def new
-    @profile = Profile.new
-  end
-
+  
+  # def new
+  #   @profile = Profile.new
+  # 
+  
   # GET /profiles/1/edit
   def edit
   end
 
   # POST /profiles
   # POST /profiles.json
-  def create
-    @profile = Profile.new(profile_params)
-    @profile.user = current_user
+  # def create
+  #   @profile = Profile.new(profile_params)
+  #   @profile.user = current_user
 
-    respond_to do |format|
-      if @profile.save
-        format.html { redirect_to @profile, notice: 'Profile was successfully created.' }
-        format.json { render :show, status: :created, location: @profile }
-      else
-        format.html { render :new }
-        format.json { render json: @profile.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+  #   respond_to do |format|
+  #     if @profile.save
+  #       format.html { redirect_to @profile, notice: 'Profile was successfully created.' }
+  #       format.json { render :show, status: :created, location: @profile }
+  #     else
+  #       format.html { render :new }
+  #       format.json { render json: @profile.errors, status: :unprocessable_entity }
+  #     end
+  #   end
+  # end
 
   # PATCH/PUT /profiles/1
   # PATCH/PUT /profiles/1.json
@@ -64,18 +66,7 @@ class ProfilesController < ApplicationController
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def profile_params
-      params.require(:profile).permit(:name, :mobile, :birth, :postcode, :address, :address2)
-    end
-
-    def non_profile
-      redirect_to new_profile_url if current_user.profile.nil?
-    end
-
-    def has_profile
-      if !current_user.profile.nil?
-        redirect_to profile_url(current_user.profile)
-      end
-      
-    end
+    # def profile_params
+    #   params.require(:profile).permit(:name, :mobile, :birth, :postcode, :address, :address2)
+    # end
 end

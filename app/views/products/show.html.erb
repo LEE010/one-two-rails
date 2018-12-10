@@ -1,66 +1,78 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @product.name %>
-</p>
-
-<p>
-  <strong>Image:</strong>
-  <%= image_tag @product.image if @product.image %>
-</p>
-
-<p>
-  <strong>Price:</strong>
-  <%= @product.price %>
-</p>
-
-<div class="input-group input-group-sm">
-  <form action="/cart" method="post">
-    <input name="product_id" type="hidden" value="<%= @product.id %>">
-    <div class="form-row">
-      <div class="col">
-          <select class="custom-select" name="option1">
-            <% @options1.each do |o| %>
-              <option value="<%= o.option1 %>"><%= o.option1 %></option>
-            <% end %>
-          </select>
-
+<div class="row">
+  <div class="col-12 col-lg-6">
+    <%= image_tag @product.image, class:"w-100" if @product.image %>
+  </div>
+  <div class="col-12 col-lg-6">
+    <div class="single-product-desc">
+      <div class="product-meta-data">
+        <%= link_to "#{@product.name}", @product, id:"product-name" %>
+        <%= link_to "#{@product.store.name}", @product.store, id:"products-store" %>
       </div>
-      
-      <div class="col">
-          <select class="custom-select" name="option2">
-            <% @options2.each do |o| %>
-              <option value="<%= o.option2 %>"><%= o.option2 %></option>
-            <% end %>
-          </select>
-      </div>
-      
-      <div class="col">
-        <input type="text" class="form-control" name="quantity" placeholder ="quantity">
-      </div>
-        
-        
-      <input class="btn btn-primary" type="submit">
+      <hr>
+      <div class="product-price justify-content-end d-flex">
+        <strong><%= @product.price %> won</strong>
       </div>
     </div>
-  </form>
+    <hr>
+    <div class="my-5">
+      <h4>details</h4><br>
+      <p>
+        <%= @product.info.html_safe %>
+      </p>
+    </div>
+    
+    <div class="user-info">
+      <%= render "layouts/vote", votable:@product %>
+    </div>
+    
+    <div class="cart">
+      <div class="input-group input-group-sm">
+        <form action="/cart" method="post">
+          <input name="product_id" type="hidden" value="<%= @product.id %>">
+          
+          <div class="form-row">
+            
+            <div class="col">
+                <select class="custom-select" name="option1">
+                  <% @options1.each do |o| %>
+                    <option value="<%= o.option1 %>"><%= o.option1 %></option>
+                  <% end %>
+                </select>
+            </div>
+            
+            <div class="col">
+                <select class="custom-select" name="option2">
+                  <% @options2.each do |o| %>
+                    <option value="<%= o.option2 %>"><%= o.option2 %></option>
+                  <% end %>
+                </select>
+            </div>
+            
+            <div class="col">
+              <input type="text" class="form-control" name="quantity" placeholder ="quantity">
+            </div>
+              
+            <input class="btn btn-primary" type="submit">
+            
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
 
-<p>
-  <strong>Info:</strong>
-  <%= @product.info.html_safe %>
-</p>
 
-<p>
-  <strong>Store:</strong>
-  <%= @product.store.name %>
-</p>
+<div class="commnet">
+  <div class="comment-form">
+    <%= render "comments/new", commentable: @product %>
+  </div>
+  
+  <div class="comment-index">
+    <%= render "comments/index", commentable: @product %>
+  </div>
+</div>
 
 <%= link_to 'Edit', edit_product_path(@product) %> |
 <%= link_to 'Back', products_path %>
-
-<div class="container" id="profile-commnets">
-  <%= render "comments/new", commentable: @product %>
-  <%= render "comments/index", commentable: @product %>
-</div>

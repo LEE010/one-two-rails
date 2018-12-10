@@ -40,21 +40,21 @@
   <%= @store.user.email %>
 </p>
 
+<hr>
+<div class="user-info">
+  <%= render "layouts/vote", votable:@store %>
+</div>
+
 <div class="container">
   <h2>Products</h2>
 
-    <div class="card-deck row">
+    <div class="card-columns">
       <% @store.products.each do |p| %>
-        <div class="card">
-          <h5 class="card-header"><%= p.store.name %></h5>
-          <%= image_tag p.image if p.image%>
-          <div class="card-body">
-            <h5 class="card-title"><%= p.name %></h5>
-          </div>
-          <div class="card-footer">
-            <small class="text-muted"><%= p.price %></small>
-          </div>
-        </div>
+        <% if p.image %>
+          <%= image_tag p.image.thumb, class: "card-img" %>
+        <% else %>
+          <%= image_tag "https://webkit.org/demos/srcset/image-src.png" , class: "card-img"%>
+        <% end %>
       <% end %>
     </div>
 </div>

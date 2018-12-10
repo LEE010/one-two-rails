@@ -1,0 +1,28 @@
+// 색상표
+// #ea573d 빨
+// #fbc063 노
+// #64b0bc 초
+// #446699 파
+// #555577 보
+// 
+
+nav{
+    background-color: #446699 ;
+    a {
+      color: #fff;
+    
+      &:visited {
+        color: #fff;
+      }
+    
+      &:hover {
+        color: #64b0bc;
+        background-color: #446699;
+      }
+    }
+}
+
+
+.home-items{
+
+}

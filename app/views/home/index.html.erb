@@ -1,7 +1,62 @@
-<h1>Home#index</h1>
-<p>Find me in app/views/home/index.html.erb</p>
-<%= link_to 'profile_index',profiles_path %><br>
-<%= link_to 'store_index',stores_path %><br>
-<%= link_to 'product_index',products_path %><br>
-<%= link_to 'my_cart',my_cart_path %><br>
-<br>
+<div class="row">
+  <div class="col-md-8">
+    <h1>like time line</h1>
+  <% @time_line_items.each do |item| %>
+    <% if item.class == Product %>
+      <div>
+        <%= item.store.name %>
+        <%= item.name %>
+        <%= item.image.url %>
+        <%= item.price %>
+        <%#= item.stock %>
+        <%= item.votes_for.size %>
+        <%= item.get_likes.size %>
+        <%= item.get_dislikes.size %>
+        <%= link_to "buy-now!", item, class:"btn btn-sm" %>
+      </div>
+      
+    <%# elsif item.class == Post %>
+      <%#= item.user.profile.image.thumb if image? %>
+      <%#= item.user.profile.name %>
+      <%#= item.profile.name %>
+      <%#= item.votes_for.size %>
+      <%#= item.get_likes.size %>
+      <%#= item.get_dislikes.size %>
+      
+    <% end %>
+  <% end %>
+    <div class="card w-100" style="width: 18rem;">
+      <div class="card-header">
+        user-name!
+      </div>
+      
+      <img class="card-img-top time-line-img" src="#" alt="Card image cap">
+      
+      <div class="card-body">
+        vote form
+      </div>
+     
+      <div class="card-body"></div>
+        <p class="card-text">post user contenet</p>
+      </div>
+      
+      <div class="card-body">
+        render "comments/index",comments_path(post)
+      </div>
+      
+      <div class="card-body">
+        render "comments/form",comments_path(post), method: :post
+      </div>
+    </div>
+    
+    <div class="col-md-4">
+      <h1>simple user profile</h1>
+    </div>
+    
+  </div>
+  
+  
+</div>
+
+
+

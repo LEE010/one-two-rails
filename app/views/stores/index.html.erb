@@ -1,7 +1,61 @@
 <p id="notice"><%= notice %></p>
+<div class="row">
+  <h1>Stores</h1>
+</div>
+<hr/>
+<div class="row">
+  <div id="storeCarousel" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+      <li data-target="#storeCarousel" data-slide-to="0" class="active"></li>
+      <li data-target="#storeCarousel" data-slide-to="1"></li>
+      <li data-target="#storeCarousel" data-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img class="d-block w-100" src="https://media4.s-nbcnews.com/i/newscms/2017_26/2053956/170627-better-grocery-store-main-se-539p_80a9ba9c8d466788799ca27568ee0d43.jpg" alt="First slide">
+      </div>
+      <div class="carousel-item">
+        <img class="d-block w-100" src="https://media4.s-nbcnews.com/i/newscms/2017_26/2053956/170627-better-grocery-store-main-se-539p_80a9ba9c8d466788799ca27568ee0d43.jpg " alt="Second slide">
+      </div>
+      <div class="carousel-item">
+        <img class="d-block w-100" src="https://media4.s-nbcnews.com/i/newscms/2017_26/2053956/170627-better-grocery-store-main-se-539p_80a9ba9c8d466788799ca27568ee0d43.jpg " alt="Third slide">
+      </div>
+    </div>
+    <a class="carousel-control-prev" href="#storeCarousel" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#storeCarousel" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+</div>
+<hr/>
+<div class="row">
+  <div class="card-columns">
+    <% @stores.each do |store| %>
+    <div class="card">
+      <div class="card-header">
+        <%= store.name %>
+      </div>
+      <img class="card-img-top" src="https://www.marketingdonut.co.uk/sites/default/files/why-do-small-businesses-need-a-brand-371705137.jpg" alt="Card image cap">
+      <div class="card-body">
+        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+        <%= link_to "Go somewhere", store, class: "btn btn-sm" %>
+      </div>
+      <div class="card-footer">
+        <small>hash_tags #,#<#<#<#<#<#<#<#<#</small>
+      </div>
+    </div>
+    <% end %>
+  </div>
+</div>
 
-<h1>Stores</h1>
 
+
+
+<hr/>
 <table>
   <thead>
     <tr>

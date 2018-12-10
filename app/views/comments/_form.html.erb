@@ -1,8 +1,10 @@
+<hr>
 <%= bootstrap_form_for(comment) do |f| %>
   <%= f.hidden_field :commentable_type, value: comment.commentable_type %>
   <%= f.hidden_field :commentable_id, value: comment.commentable_id %>
   <%= f.hidden_field :user_id, value: current_user %>
-  <%= f.text_field :title %>
+  <%#= f.text_field :title %>
   <%= f.text_field :comment %>
   <%= f.submit "save", class: "btn btn-primary" %>
 <% end %>
+<hr>

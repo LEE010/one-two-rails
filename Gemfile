@@ -4,9 +4,11 @@ git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
   "https://github.com/#{repo_name}.git"
 end
-gem 'acts_as_commentable'
 
-gem 'httparty'
+gem 'acts_as_commentable'
+gem 'acts_as_votable'
+gem 'acts_as_follower', github: 'tcocca/acts_as_follower', branch: 'master'
+
 gem 'rest-client'
 gem 'rqrcode'
 

@@ -1,3 +1,33 @@
 // Place all the styles related to the profiles controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.profile-user-info{
+    text-align: center;
+    .user-img{
+        display: inline-block;
+        img{
+        width: 10rem;
+        height: 10rem;
+        }
+    }
+    .privacy{
+          
+    }
+}
+
+.profile-user-post{
+    div{
+        border-width : 1px;
+        border-color : gray;
+        border-style : solid;
+        border-radius: 10px 10px;
+
+    }
+    img{
+        width: 25%;
+        height: auto;
+    }
+    
+
+}
+    
