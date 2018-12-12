@@ -17,6 +17,7 @@ class CartController < ApplicationController
       format.js
       format.html
     end
+    
   end
   
   def create

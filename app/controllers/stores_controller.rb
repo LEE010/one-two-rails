@@ -24,7 +24,7 @@ class StoresController < ApplicationController
   def edit
   end
   
-  def manage
+  def management
     @products = @store.products.order(updated_at: :desc)
     
   end
@@ -71,7 +71,7 @@ class StoresController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def store_params
-      params.require(:store).permit(:name, :regist_number, :postcode, :address, :address2, :phone_number, :account_number, :user_id)
+      params.require(:store).permit(:name, :image, :regist_number, :postcode, :address, :address2, :phone_number, :account_number, :user_id)
     end
 
     def has_store

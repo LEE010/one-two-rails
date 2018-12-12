@@ -2,6 +2,7 @@ class Post < ApplicationRecord
   mount_uploader :image, PostUploader
   acts_as_commentable
   acts_as_votable
+  resourcify
   belongs_to :user
   
   validates :content, presence: true

@@ -2,16 +2,19 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
+    alias_action :management, :toggle, :my_profile, :like, :unlike, :thumb_up, :thumb_down, to: :update
+    alias_action :search, :main, :kakao, :kakao_success, to: :read
     # Define abilities for the passed in user here. For example:
     #
       # user ||= User.new # guest user (not logged in)
+      
       if user.has_role? :admin
         can :manage, :all
       elsif user.has_role? :seller
         can :read, :all
         can [:create, :update], [Profile, Store], user: user
-        can :manage, [Product, Option], store: user.store
-        # can :manage, Option, product: user.store.products
+        can :manage, Product, store: user.store
+        can :manage, Option, store: user.store
       else
         can :read, :all
         can [:create, :update], Profile, user: user

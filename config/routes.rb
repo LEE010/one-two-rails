@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   resources :products
   
   resources :stores, except: [:destroy]
-  get '/store/:id/manage', to:"stores#manage", as: :manage_store
+  get '/store/:id/management', to:"stores#management", as: :manage_store
   
   resources :profiles, except: [:new, :destroy]
   resources :posts, except: [:index,:show]

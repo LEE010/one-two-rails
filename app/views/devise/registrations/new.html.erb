@@ -27,6 +27,10 @@
   </div>
   
   <div class="field">
+    <%= pf.file_field :image, accept: 'image/jpeg, image/jpg image/png, image/gif' %>
+  </div>
+  
+  <div class="field">
     <%= pf.text_field :mobile %>
   </div>
   
@@ -93,4 +97,11 @@
             }
         }).open();
     }
+    
+    $('#user_profile_attributes_image').on('change',function(){
+      //get the file name
+      var fileName = $(this).val().replace(/^.*[\\\/]/, '');
+      //replace the "Choose a file" label
+      $(this).next('.custom-file-label').html(fileName);
+            })
 </script>

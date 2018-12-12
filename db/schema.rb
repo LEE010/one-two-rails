@@ -70,6 +70,7 @@ ActiveRecord::Schema.define(version: 20181210124302) do
 
   create_table "profiles", force: :cascade do |t|
     t.string   "name"
+    t.string   "image"
     t.string   "mobile"
     t.integer  "postcode"
     t.string   "address"
@@ -94,6 +95,7 @@ ActiveRecord::Schema.define(version: 20181210124302) do
 
   create_table "stores", force: :cascade do |t|
     t.string   "name",           null: false
+    t.string   "image"
     t.string   "regist_number",  null: false
     t.integer  "postcode"
     t.string   "address"

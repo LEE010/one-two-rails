@@ -1,4 +1,5 @@
 class PaymentsController < ApplicationController
+  load_and_authorize_resource
   before_action :check_acount, only: [:kakao]
   require 'rqrcode'
   require 'rest-client'
@@ -11,7 +12,7 @@ class PaymentsController < ApplicationController
     @total_amount = params[:total_amount].to_i
     url = 'https://kapi.kakao.com/v1/payment/ready'
     header = {content_type: 'application/x-www-form-urlencoded',
-              Authorization:'KakaoAK 7c1a7f46d8d4299aba89d608d98a3641'}
+              Authorization:"KakaoAK #{ENV['KAKAO_AK']}"}
     payload = {
         cid: "TC0ONETIME",
         partner_order_id: 0,

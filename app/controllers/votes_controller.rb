@@ -1,6 +1,5 @@
 class VotesController < ApplicationController
     def like
-     
       # sql = "Select * From #{params[:votable]}s Where #{params[:votable]}.id=#{params[:id]}"
       # votable = ActiveRecord::Base.connection.find_by_sql(sql)
       votable = params[:votable].singularize.classify.constantize.find(params[:id])

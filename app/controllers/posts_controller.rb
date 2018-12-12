@@ -1,4 +1,5 @@
 class PostsController < ApplicationController
+  load_and_authorize_resource
   def create
     @post = Post.new post_params
     @post.user = current_user
