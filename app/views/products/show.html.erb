@@ -23,12 +23,12 @@
       </p>
     </div>
     
-    <div class="user-info">
+    <div class="user-info text-right">
       <%= render "layouts/vote", votable:@product %>
     </div>
     
     <div class="cart">
-      <div class="input-group input-group-sm">
+      <div class="input-group">
         <form action="/cart" method="post">
           <input name="product_id" type="hidden" value="<%= @product.id %>">
           
@@ -70,7 +70,7 @@
   </div>
   
   <div class="comment-index">
-    <%= render "comments/index", commentable: @product %>
+    <%= render "comments/index", comments: @product.comments %>
   </div>
 </div>
 

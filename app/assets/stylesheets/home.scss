@@ -6,7 +6,7 @@
 // #555577 보
 // 
 
-nav{
+.navbar{
     background-color: #446699 ;
     a {
       color: #fff;
@@ -23,6 +23,32 @@ nav{
 }
 
 
-.home-items{
+.time-line-card{
+    margin: 2rem 0 2rem 0;
+    hr{
+        margin: 2px 0 2px 0;
+    }
+}
+.table{
+    table-layout: auto;
+}
 
+.index-thumb{
+    border-radius: 50%;
+    width: 5rem;
+    height: 5rem;
+    margin: 2rem;
+    
+}
+
+#index-user-info{
+    @include media-breakpoint-down(sm) {
+        display: none;
+    }
+    
+}
+#nav-tabContent{
+   .container-fluid {
+        margin: 1rem 0 1rem 0;
+    }
 }

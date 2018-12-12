@@ -1,7 +1,7 @@
 class StoresController < ApplicationController
-  before_action :set_store, only: [:show, :edit, :update]
-  before_action :non_store, only: [:edit, :update]
-  before_action :check_owner, except: [:index, :show ]
+  before_action :set_store, only: [:show, :edit, :update, :manage]
+  before_action :has_store, only: [:new, :create]
+  before_action :check_owner, only: [:edit, :update ]
   load_and_authorize_resource
   # GET /stores
   # GET /stores.json
@@ -12,6 +12,7 @@ class StoresController < ApplicationController
   # GET /stores/1
   # GET /stores/1.json
   def show
+    @products = @store.products
   end
 
   # GET /stores/new
@@ -22,7 +23,11 @@ class StoresController < ApplicationController
   # GET /stores/1/edit
   def edit
   end
-
+  
+  def manage
+    @products = @store.products.order(updated_at: :desc)
+    
+  end
   # POST /stores
   # POST /stores.json
   def create
@@ -31,6 +36,7 @@ class StoresController < ApplicationController
 
     respond_to do |format|
       if @store.save
+        current_user.add_role "seller"
         format.html { redirect_to @store, notice: 'Store was successfully created.' }
         format.json { render :show, status: :created, location: @store }
       else
@@ -68,11 +74,17 @@ class StoresController < ApplicationController
       params.require(:store).permit(:name, :regist_number, :postcode, :address, :address2, :phone_number, :account_number, :user_id)
     end
 
-    def non_store
-      redirect_to new_store_url if current_user.store.nil?
+    def has_store
+      redirect_to current_user.store unless current_user.store.nil?
     end
-
-    # TODO: add role check
+    
     def check_owner
+      unless @store.user == current_user
+        if current_user.store.nil?
+          redirect_to new_store_url
+        else
+          redirect_to current_user.store 
+        end
+      end
     end
 end

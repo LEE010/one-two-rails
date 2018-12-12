@@ -20,9 +20,9 @@
   </div>
 
   <div class="field">
-    <%= f.text_field :postcode, id:'postcode' %>
+    <%= f.text_field :postcode, id:'postcode', readonly: true %>
     <input class="btn btn-primary" type="button" onclick="execDaumPostcode()" value="우편번호 찾기"><br>
-    <%= f.text_field :address, id:'address'%>
+    <%= f.text_field :address, id:'address', readonly: true %>
     <%= f.text_field :address2, id:'address2' %>
   </div>
 

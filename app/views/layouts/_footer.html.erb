@@ -1,9 +1,9 @@
 <% if user_signed_in? %>
   <footer id="nav-bottom" >
     <nav class="navbar fixed-bottom navbar-expand-sm d-flex justify-content-around">
-      <%= link_to fa_icon("search 2x"), index_path, class: "nav-item nav-link"  %>
-      <%= link_to fa_icon("archive 2x"), products_path, class: "nav-item nav-link"  %>
-      <%= link_to fa_icon("users 2x") , profiles_path, class: "nav-item nav-link"  %>
+      <%= link_to fa_icon("list-alt 2x"), index_path, class: "nav-item nav-link"  %>
+      <%= link_to fa_icon("search 2x"), search_path, class: "nav-item nav-link"  %>
+      <%= link_to fa_icon("archive 2x") , products_path, class: "nav-item nav-link"  %>
       <%= link_to fa_icon("user 2x"), profile_path(current_user.profile), class: "nav-item nav-link" %>
     </nav>
   </footer>

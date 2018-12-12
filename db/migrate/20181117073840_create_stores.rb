@@ -2,6 +2,7 @@ class CreateStores < ActiveRecord::Migration[5.0]
   def change
     create_table :stores do |t|
       t.string :name, null: false
+      t.string :image
       t.string :regist_number, unique: true, null: false
       t.integer :postcode
       t.string :address

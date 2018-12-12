@@ -5,7 +5,15 @@ class ProductsController < ApplicationController
   # GET /products
   # GET /products.json
   def index
-    @products = Product.all
+    @follow_stores = current_user.follows_by_type('Store')
+    @stores = []
+    @follow_stores.each do |followable|
+      @stores.append followable.followable_id
+    end
+    
+    @products = Product.where(store_id: @stores).order(updated_at: :desc)
+    
+    
   end
 
   # GET /products/1

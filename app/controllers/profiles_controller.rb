@@ -15,6 +15,9 @@ class ProfilesController < ApplicationController
   end
   
   def show
+    @posts = @profile.user.posts
+    @follow_users = @profile.user.follows_by_type('User')
+    @follow_stores = @profile.user.follows_by_type('Store')
   end
   
   # def new

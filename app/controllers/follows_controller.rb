@@ -1,6 +1,6 @@
 class FollowsController < ApplicationController
   def toggle
-    votable = params[:votable].singularize.classify.constantize.find(params[:id])
+    votable = params[:followable].singularize.classify.constantize.find(params[:id])
    
     if current_user.following?(votable)
       current_user.stop_following(votable)
@@ -8,6 +8,6 @@ class FollowsController < ApplicationController
       current_user.follow(votable)
     end
     
-    redirect_to votable
+    redirect_back(fallback_location: current_user.profile)
   end
 end

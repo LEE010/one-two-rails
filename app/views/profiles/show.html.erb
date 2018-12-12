@@ -8,11 +8,22 @@
     
     <div class="col-sm-8 text-left ">
       <div>
-        <%= @profile.name %>|<%= link_to "Edit-Profile", edit_profile_path(@profile) , class: "btn btn-sm" %>
+        <%= @profile.name %>
+        
+        <% if @profile.user == current_user %>
+          <%= link_to "Edit-Profile", edit_profile_path(@profile) , class: "btn btn-sm"  %>
+        <% else %>
+          <%= render 'layouts/follow', followable: @profile.user %>
+        <% end %>
+        
+        <% unless @profile.user.store.nil? %>
+          <%= link_to "Go store", @profile.user.store, class: "btn btn-sm" %>
+        <% end %>
+        
       </div>
       
       <div>
-        Post 0<%#= @profile.user.posts.count %>| Follower <%= @profile.user.followers_count %>| Follow <%= @profile.user.follow_count %>
+        Post <%= @profile.user.posts.count %> | Follower <%= @profile.user.followers_count %> | Follow <%= @profile.user.follow_count %>
       </div>
       <div>
         <%= @profile.user.email %>
@@ -22,52 +33,105 @@
   </div>
 </div>
 <hr>
-<div class="row profile-user-post">
-  <div class="col-sm-6">
-    <h3>user post</h3>
-    <hr>
-    <img src="https://www.thestylease.com/images/user.png" alt="..." class="img-thumbnail">
-    <img src="https://www.thestylease.com/images/user.png" alt="..." class="img-thumbnail">
-    <img src="https://www.thestylease.com/images/user.png" alt="..." class="img-thumbnail">
+
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="user_posts_tab" data-toggle="tab" href="#user_posts" role="tab" aria-controls="MyPost" aria-selected="true">MyPost</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="user_follows_store_tab" data-toggle="tab" href="#user_follows_store" role="tab" aria-controls="FollowStore" aria-selected="false">FollowStore</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="user_follows_users_tab" data-toggle="tab" href="#user_follows_users" role="tab" aria-controls="FollowUser" aria-selected="false">FollowUser</a>
+  </li>
+</ul>
+
+<div class="tab-content" id="userTabContent">
+  
+  <div class="tab-pane fade show active" id="user_posts" role="tabpanel" aria-labelledby="user_posts_tab">
+    
+    <div class="row" id="store-card">
+      
+      
+      <% @posts.each do |item| %>
+        
+        <div class="card w-100 time-line-card">
+          
+          <div class="card-header justify-content-between">
+            <strong><%= link_to item.user.profile.name, item.user.profile %></strong>
+              <%= link_to fa_icon("pencil"), edit_post_path(item) %>
+              <%= link_to fa_icon("times"), post_path(item), method: :delete, data: {confirm: '게시글을 삭제하시겠습니까?'} %>
+          </div>
+          
+          <%= image_tag item.image.url, class:"card-img-top w-100" if item.image? %>
+            
+          <div class="card-body text-right">
+            <%= render 'layouts/vote', votable: item %>
+            반응 <%= item.votes_for.size %>
+            좋아요 <%= item.get_likes.size %>
+            별로에요 <%= item.get_dislikes.size %>
+          </div>
+          <hr>
+          <div class="card-body">
+            <p class="card-text">
+              <%= item.content %>
+            </p>
+          </div>
+          <hr>
+          <div class="card-body">
+            <%= render "comments/index", comments: item.comments %>
+          </div>
+          <div class="card-footer text-right">
+            <%= render "comments/new", commentable: item %>
+          </div>
+        </div>
+      <% end %>
+      
+    </div>
+  </div>
+    
+  
+  
+  <div class="tab-pane fade" id="user_follows_store" role="tabpanel" aria-labelledby="user_follows_store_tab">
+    <div class="row" id="store-card">
+      <div class="card-columns">
+        <% @follow_stores.each do |followable| %>
+        <div class="card">
+          <% store = Store.find(followable.followable_id) %>
+          <%#= if store.image? %>
+            <%#= image_tag store.image.thumb, class:"card-img-top" %>
+          <%#= else %>
+            <%= image_tag "https://img.icons8.com/cotton/1600/online-store.png", class:"card-img-top" %>
+          <%#= end %>
+          <div class="card-footer text-center">
+            <%=link_to store.name, store %>
+          </div>
+        </div>
+        <% end %>
+      </div>
+    </div>
   </div>
   
-  <div class="col-sm-6">
-    <h3>follewd post</h3>
-    <hr>
-    <img src="https://www.thestylease.com/images/user.png" alt="..." class="img-thumbnail">
-    <img src="https://www.thestylease.com/images/user.png" alt="..." class="img-thumbnail">
-    <img src="https://www.thestylease.com/images/user.png" alt="..." class="img-thumbnail">
+  <div class="tab-pane fade" id="user_follows_users" role="tabpanel" aria-labelledby="user_follows_users_tab">
+    <div class="row" id="store-card">
+      <div class="card-columns">
+        <% @follow_users.each do |followable| %>
+        <div class="card">
+          <% user = User.find(followable.followable_id) %>
+          <%#= if store.image? %>
+            <%#= image_tag store.image.thumb, class:"card-img-top" %>
+          <%#= else %>
+            <%= image_tag "https://www.thestylease.com/images/user.png", class:"card-img-top" %>
+          <%#= end %>
+          <div class="card-footer text-center">
+            <%=link_to user.profile.name, user.profile %>
+          </div>
+        </div>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>
-
-
-
-<p>
-  <strong>Name:</strong>
-
-  <%= @profile.name %>
-</p>
-
-<p>
-  <strong>Mobile:</strong>
-  <%= @profile.mobile %>
-</p>
-
-<p>
-  <strong>Address:</strong>
-  <%= @profile.address %>
-  <%= @profile.address2 %>
-</p>
-
-<p>
-  <strong>Birth:</strong>
-  <%= @profile.birth %>
-</p>
-
-<p>
-  <strong>User:</strong>
-  <%= @profile.user.email %>
-</p>
 
 
 <%= link_to 'Edit', edit_profile_path(@profile) %> |

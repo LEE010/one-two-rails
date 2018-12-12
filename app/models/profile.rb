@@ -1,5 +1,6 @@
 class Profile < ApplicationRecord
   VALID_PHONE_NUMBER = /\A010([1-9]{1}[0-9]{3})([0-9]{4})\z/
+  # mount_uploader :image, ProfileImgUploader
   resourcify
   belongs_to :user, dependent: :destroy, optional: true
   validates :name, presence: true, length: { minimum: 1, maximum: 30 }

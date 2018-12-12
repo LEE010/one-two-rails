@@ -1,0 +1,20 @@
+<div class="row" id="productCard">
+  <div class="card-columns">
+    <% products.each do |product| %>
+    <div class="card">
+      <div class="card-header">
+        <%=link_to product.store.name, product.store %>
+      </div>
+      <%= image_tag product.image.thumb, class:"card-img-top w-100" %>
+      <div class="card-body text-center">
+        <strong><%= product.name %></strong>
+        <spen><%= link_to 'detail', product, class: "btn btn-sm" %></spen>
+      </div>
+      <div class="card-footer text-center">
+        <strong><%= product.price %> won</strong>
+      </div>
+    </div>
+    <% end %>
+  </div>
+</div>
+

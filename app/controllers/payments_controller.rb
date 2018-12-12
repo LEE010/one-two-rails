@@ -1,4 +1,5 @@
 class PaymentsController < ApplicationController
+  before_action :check_acount, only: [:kakao]
   require 'rqrcode'
   require 'rest-client'
 
@@ -7,6 +8,7 @@ class PaymentsController < ApplicationController
   end
   
   def kakao
+    @total_amount = params[:total_amount].to_i
     url = 'https://kapi.kakao.com/v1/payment/ready'
     header = {content_type: 'application/x-www-form-urlencoded',
               Authorization:'KakaoAK 7c1a7f46d8d4299aba89d608d98a3641'}
@@ -16,13 +18,13 @@ class PaymentsController < ApplicationController
         partner_user_id: 0,
         item_name: "one-two",
         quantity: 1,
-        total_amount: 1000000,
-        tax_free_amount: 1000000,
+        total_amount: @total_amount,
+        tax_free_amount: @total_amount,
         approval_url: "https://a7bdfbf884dd4cb29015d3a81ab52fea.vfs.cloud9.us-east-2.amazonaws.com/payments/kakao/success",
         cancel_url: "https://a7bdfbf884dd4cb29015d3a81ab52fea.vfs.cloud9.us-east-2.amazonaws.com/payments/kakao/cancel",
         fail_url: "https://a7bdfbf884dd4cb29015d3a81ab52fea.vfs.cloud9.us-east-2.amazonaws.com/payments/kakao/fail"
     }
-    @total_amount = params[:total_amount].to_i
+  
     res = RestClient.post(url, payload, headers = header)
     @res = JSON.parse(res)
     @@tid = @res["tid"]
@@ -33,7 +35,7 @@ class PaymentsController < ApplicationController
   def kakao_success
     url = 'https://kapi.kakao.com/v1/payment/approve'
     header = {content_type: 'application/x-www-form-urlencoded',
-              Authorization:'KakaoAK 7c1a7f46d8d4299aba89d608d98a3641'}
+              Authorization:"KakaoAK #{ENV['KAKAO_AK']}"}
     payload = {
         cid: "TC0ONETIME",
         tid: @@tid,
@@ -73,5 +75,15 @@ class PaymentsController < ApplicationController
     @qr = RQRCode::QRCode.new( 'https://github.com/whomwah/rqrcode', :size => 4, :level => :h )
   end
   
+  private
+  def check_acount
+    unless 1000 <= params[:total_amount].to_i and params[:total_amount].to_i <= 1000000
+      redirect_to my_cart_path, :flash => { :error => "1,000원 이상 1,000,000원 이하의 금액만 결제 가능합니다." } 
+    end 
+      
+  end
+  def set_total_amount
+    
+  end
 end
 

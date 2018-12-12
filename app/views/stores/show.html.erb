@@ -1,55 +1,47 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @store.name %>
-</p>
-
-<p>
-  <strong>Regist number:</strong>
-  <%= @store.regist_number %>
-</p>
-
-<p>
-  <strong>Postcode:</strong>
-  <%= @store.postcode %>
-</p>
-
-<p>
-  <strong>Address:</strong>
-  <%= @store.address %>
-</p>
-
-<p>
-  <strong>Address2:</strong>
-  <%= @store.address2 %>
-</p>
-
-<p>
-  <strong>Phone number:</strong>
-  <%= @store.phone_number %>
-</p>
-
-<p>
-  <strong>Account number:</strong>
-  <%= @store.account_number %>
-</p>
-
-<p>
-  <strong>User:</strong>
-  <%= @store.user.email %>
-</p>
-
-<hr>
-<div class="user-info">
-  <%= render "layouts/vote", votable:@store %>
+<div class="store-info">
+  <div class="row">
+    <div class="user-img col-sm-4 ">
+      <%= image_tag "https://img.icons8.com/cotton/1600/online-store.png" %>
+    </div>
+    
+    <div class="col-sm-8 text-left ">
+      <div>
+        <%= @store.name %>
+        
+        <% if @store.user == current_user %>
+          <%= link_to "Edit-Store", edit_store_path(@store) , class: "btn btn-sm"  %>
+          <%= link_to "Stock-manage", manage_store_path(@store), class: "btn btn-sm" %>
+        <% else %>
+          <%= render 'layouts/follow', followable: @store.user %>
+        <% end %>
+      </div>
+      
+      <div>
+        Product: <%= @store.products.count %> | Follower <%= @store.followers_count %>
+      </div>
+      <div>
+        <p>
+          <%= @store.regist_number %><br>
+          <%= @store.postcode %><br>
+          <%= @store.address %><br>
+          <%= @store.address2 %><br>
+          <%= @store.phone_number %><br>
+        </p>
+        
+        
+      </div>
+    </div>
+    
+  </div>
 </div>
 
 <div class="container">
   <h2>Products</h2>
 
     <div class="card-columns">
-      <% @store.products.each do |p| %>
+      <% @products.each do |p| %>
         <% if p.image %>
           <%= image_tag p.image.thumb, class: "card-img" %>
         <% else %>

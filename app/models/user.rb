@@ -8,6 +8,8 @@ class User < ApplicationRecord
   acts_as_follower
   acts_as_followable
   has_one :store
+  has_many :comments
+  has_many :posts
  
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable

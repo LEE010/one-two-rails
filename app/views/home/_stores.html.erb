@@ -1,0 +1,17 @@
+<div class="row" id="store-card">
+  <div class="card-columns">
+    <% stores.each do |store| %>
+    <div class="card">
+      
+      <%#= if store.image? %>
+        <%#= image_tag store.image.thumb, class:"card-img-top" %>
+      <%#= else %>
+        <%= image_tag "https://img.icons8.com/cotton/1600/online-store.png", class:"card-img-top" %>
+      <%#= end %>
+      <div class="card-footer text-center">
+        <%=link_to store.name, store %>
+      </div>
+    </div>
+    <% end %>
+  </div>
+</div>

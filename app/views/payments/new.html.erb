@@ -2,4 +2,5 @@
 <p>Find me in app/views/payments/new.html.erb</p>
 
 총 결재금액:<%= @total_amount %> 원<br>
-<%= link_to 'KakaoPay',kakao_path, class:"btn btn-warning"%> 
+
+<%= link_to 'KakaoPay',kakao_path(@total_amount), class:"btn", id: "kakao_btn"  %> 

@@ -1,0 +1,5 @@
+<% unless current_user.following?(followable) %>
+  <%= link_to "Follow", follow_path(followable: followable.class, id: followable.id), method: :post, class: "btn btn-sm", id: "follow" %>
+<% else %>
+  <%= link_to "UnFollow", follow_path(followable: followable.class, id: followable.id), method: :post, class: "btn btn-sm", id: "unfollow" %>
+<% end %>

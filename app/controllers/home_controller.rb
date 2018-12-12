@@ -15,15 +15,25 @@ class HomeController < ApplicationController
         followable.products.each do |item| #all items
           @time_line_items.append item
         end
-      # elsif f[:followable_type] == "User"
+      elsif f[:followable_type] == "User"
         # followable.posts.where("updated_at >= ?",Date.today).each do |item| #today update itmes!
-        # followable.posts.each do |item| #all items
-        #   @time_line_items.append item
-        # end
+        followable.posts.each do |item| #all items
+          @time_line_items.append item
+        end
       end
     end
+    
+    current_user.posts.each do |p|
+      @time_line_items.append p
+    end
+    
     @time_line_items.sort_by!{ |item| item[:updated_at] }.reverse!
     # debugger
   end
   
+  def search
+    @stores = Store.all
+    @profiles = Profile.all
+    @products = Product.all
+  end
 end

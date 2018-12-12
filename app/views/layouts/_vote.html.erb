@@ -1,21 +1,15 @@
-<hr/>
+
 <div class="container" id="vote">
   <% unless current_user.voted_up_on?(votable) %>
-    <%= link_to fa_icon("heart-o 2x"), like_path(votable: votable.class), method: :post %>
+    <%= link_to fa_icon("heart-o 2x"), like_path(votable: votable.class, id: votable.id), method: :post %>
   <% else %>
-    <%= link_to fa_icon("heart 2x"), unlike_path(votable: votable.class), method: :delete %>
+    <%= link_to fa_icon("heart 2x"), unlike_path(votable: votable.class, id: votable.id), method: :delete %>
   <% end %>
   
   <% unless current_user.voted_down_on?(votable) %>
-    <%= link_to fa_icon("thumbs-o-down 2x"), thumb_down_path(votable: votable.class), method: :post %>
+    <%= link_to fa_icon("thumbs-o-down 2x"), thumb_down_path(votable: votable.class, id: votable.id), method: :post %>
   <% else %>
-    <%= link_to fa_icon("thumbs-down 2x"), thumb_up_path(votable: votable.class), method: :delete %>
+    <%= link_to fa_icon("thumbs-down 2x"), thumb_up_path(votable: votable.class, id: votable.id), method: :delete %>
   <% end %>
   
-  <% unless current_user.following?(votable) %>
-    <%= link_to "Follow", follow_path(votable: votable.class), method: :post, class: "btn btn-sm", id: "follow" %>
-  <% else %>
-    <%= link_to "UnFollow", follow_path(votable: votable.class), method: :post, class: "btn btn-sm", id: "unfollow" %>
-  <% end %>
 </div>
-<hr/>
