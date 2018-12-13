@@ -1,9 +1,13 @@
 source 'https://rubygems.org'
 ruby '2.4.1'
+gem 'sinatra', '1.0'
+
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
   "https://github.com/#{repo_name}.git"
 end
+
+
 
 gem 'acts_as_commentable'
 gem 'acts_as_votable'
@@ -17,7 +21,6 @@ gem "figaro"
 # gem "fog"
 gem 'fog-aws'
 gem 'carrierwave'
-gem "mini_magick"
 gem 'tinymce-rails'
 
 gem 'devise'
