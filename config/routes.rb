@@ -25,7 +25,7 @@ Rails.application.routes.draw do
   get '/home/index', to: "home#index", as: :index
   get '/home/search', to: "home#search", as: :search
   
-  get '/payments/:total_amount' => 'payments#new', :as => :new_payment
+  get '/payments/:total_amount' => 'payments#new', as: :new_payment
   get '/payments/kakao/success' => 'payments#kakao_success'
   get '/payments/kakao/cancel' => 'payments#kakao_cancel'
   get '/payments/kakao/fail' => 'payments#kakao_fail'

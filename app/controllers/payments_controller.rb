@@ -1,7 +1,7 @@
 class PaymentsController < ApplicationController
-  load_and_authorize_resource
+  # load_and_authorize_resource
   before_action :check_acount, only: [:kakao]
-  require 'rqrcode'
+  # require 'rqrcode'
   require 'rest-client'
 
   def new
@@ -36,7 +36,7 @@ class PaymentsController < ApplicationController
   def kakao_success
     url = 'https://kapi.kakao.com/v1/payment/approve'
     header = {content_type: 'application/x-www-form-urlencoded',
-              Authorization:"KakaoAK #{ENV['KAKAO_AK']}"}
+              Authorization:"KakaoAK #{ENV['KAKAO_AK']}" }
     payload = {
         cid: "TC0ONETIME",
         tid: @@tid,
@@ -53,28 +53,36 @@ class PaymentsController < ApplicationController
     
   end
   
-  def toss
-    url = "https://pay.toss.im/api/v1/payments"
-    header = {content_type: 'application/json'}
-    payload = {
-        "orderNo" => "2015072012211",
-        "amount"=> 10000,
-        "amountTaxFree"=> 0,
-        "productDesc" => "테스트 결제",
-        "apiKey" => "sk_test_apikey1234567890",
-        "expiredTime" => "2015-07-20 16:21:00",
-        "resultCallback" => "https://a7bdfbf884dd4cb29015d3a81ab52fea.vfs.cloud9.us-east-2.amazonaws.com/payments/result"
-    }
-    @res = RestClient.post(url, payload)
-  end
-  
-  def create
+  def kakao_cancel
     
   end
   
-  def show
-    @qr = RQRCode::QRCode.new( 'https://github.com/whomwah/rqrcode', :size => 4, :level => :h )
+  def kakao_fail
+    
   end
+  
+  # def toss
+  #   url = "https://pay.toss.im/api/v1/payments"
+  #   header = {content_type: 'application/json'}
+  #   payload = {
+  #       "orderNo" => "2015072012211",
+  #       "amount"=> 10000,
+  #       "amountTaxFree"=> 0,
+  #       "productDesc" => "테스트 결제",
+  #       "apiKey" => "sk_test_apikey1234567890",
+  #       "expiredTime" => "2015-07-20 16:21:00",
+  #       "resultCallback" => "https://a7bdfbf884dd4cb29015d3a81ab52fea.vfs.cloud9.us-east-2.amazonaws.com/payments/result"
+  #   }
+  #   @res = RestClient.post(url, payload)
+  # end
+  
+  # def create
+    
+  # end
+  
+  # def show
+  #   @qr = RQRCode::QRCode.new( 'https://github.com/whomwah/rqrcode', :size => 4, :level => :h )
+  # end
   
   private
   def check_acount
@@ -83,8 +91,8 @@ class PaymentsController < ApplicationController
     end 
       
   end
-  def set_total_amount
+  # def set_total_amount
     
-  end
+  # end
 end
 

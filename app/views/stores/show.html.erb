@@ -39,7 +39,9 @@
 
 <div class="container">
   <h2>Products</h2>
-
+  <% if @store.user == current_user %>
+    <%= link_to "Add-Product", new_product_path, class: "btn" %>
+  <% end %>
     <div class="card-columns">
       <% @products.each do |p| %>
         <% if p.image %>

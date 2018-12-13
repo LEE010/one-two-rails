@@ -12,6 +12,9 @@ gem 'acts_as_follower', github: 'tcocca/acts_as_follower', branch: 'master'
 gem 'rest-client'
 gem 'rqrcode'
 
+gem "figaro"
+
+# gem "fog"
 gem 'fog-aws'
 gem 'carrierwave'
 gem "mini_magick"

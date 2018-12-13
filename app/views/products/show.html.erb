@@ -9,6 +9,9 @@
       <div class="product-meta-data">
         <%= link_to "#{@product.name}", @product, id:"product-name" %>
         <%= link_to "#{@product.store.name}", @product.store, id:"products-store" %>
+        <% if @product.store == current_user.store %>
+          <%= link_to "Edit", edit_product_path(@product), class: "btn" %>
+        <% end %>
       </div>
       <hr>
       <div class="product-price justify-content-end d-flex">
