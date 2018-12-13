@@ -1,0 +1,22 @@
+<div class="row">
+  <div class="jumbotron w-100">
+    <h1 class="display-4">안녕하세요, <%= current_user.profile.name %>님</h1>
+    
+    <hr class="my-4">
+    <div>
+      <p>스토어들과 다른 사용자들을 팔로우 하고싶으시면 아래의 버튼을 눌러주세요.</p>
+      <%= link_to "SEARCH", search_path, class: "btn btn-lg" %>
+    </div>
+    
+    <hr class="my-4">
+    <div>
+      <p> 매장을 운영하고 계신다면, 직접 등록하고 관리해보세요,</p>
+      <%= link_to "Create-Store", new_store_path, class: "btn btn-lg" %>
+    </div>
+    
+  </div>
+</div>
+
+
+
+

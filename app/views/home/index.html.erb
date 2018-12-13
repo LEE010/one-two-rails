@@ -1,7 +1,121 @@
-<h1>Home#index</h1>
-<p>Find me in app/views/home/index.html.erb</p>
-<%= link_to 'profile_index',profiles_path %><br>
-<%= link_to 'store_index',stores_path %><br>
-<%= link_to 'product_index',products_path %><br>
-<%= link_to 'my_cart',my_cart_path %><br>
-<br>
+<div class="row">
+  <div class="col-md-8">
+    <div id="index-post-form">
+      <h2>글작성</h2>
+      <%= render "posts/form", post: current_user.posts.new %>
+    </div>
+    <% unless @time_line_items.count == 0 %> 
+      <% @time_line_items.each do |item| %>
+        <% if item.class == Product %>
+            
+          <div class="card w-100 time-line-card">
+            <div class="card-header justify-content-between">
+              <strong><%= link_to item.name, item %></strong>
+              <small><%= link_to item.store.name, item.store %></small>
+            </div>
+            
+            <%= image_tag item.image.url, class:"card-img-top w-100" %>
+            
+            <div class="card-body text-right">
+              <%= render 'layouts/vote' ,votable: item %>
+              반응 <%= item.votes_for.size %>
+              좋아요 <%= item.get_likes.size %>
+              별로에요 <%= item.get_dislikes.size %>
+            </div>
+            <hr>
+            <div class="card-body text-right">
+              <p class="card-text">
+                <h3><%= item.price %> won</h3>
+                <%= link_to "buy-now!", item, class:"btn btn-sm" %>
+              </p>
+            </div>
+            <hr>
+            <div class="card-body">
+              <%= render "comments/index", comments: item.comments %>
+            </div>
+            <div class="card-footer text-right">
+              <%= render "comments/new", commentable: item %>
+            </div>
+          </div>
+          
+        <% elsif item.class == Post %>
+          <div class="card w-100 time-line-card">
+            <div class="card-header justify-content-between">
+              <strong><%= link_to item.user.profile.name, item.user.profile %></strong>
+              <%= link_to fa_icon("pencil"), edit_post_path(item) %>
+              <%= link_to fa_icon("times"), post_path(item), method: :delete, data: {confirm: '게시글을 삭제하시겠습니까?'} %>
+            </div>
+            
+            <%= image_tag item.image.url, class:"card-img-top w-100" if item.image? %>
+            
+            <div class="card-body text-right">
+              <%= render 'layouts/vote', votable: item %>
+              반응 <%= item.votes_for.size %>
+              좋아요 <%= item.get_likes.size %>
+              별로에요 <%= item.get_dislikes.size %>
+            </div>
+            <hr>
+            <div class="card-body">
+              <p class="card-text">
+                <%= item.content %>
+              </p>
+            </div>
+            <hr>
+            <div class="card-body">
+              <%= render "comments/index", comments: item.comments %>
+            </div>
+            <div class="card-footer text-right">
+              <%= render "comments/new", commentable: item %>
+            </div>
+          </div>
+          
+        <% end %>
+      <% end %>
+    <% else %>
+      <%= image_tag "http://danieladeyemi.com.ng/wp-content/uploads/2017/02/Wait.png" %>
+      <p> 팔로우 중인 유저와 상점이 없습니다. 팔로우 후 이용해주세요.</p>
+    <% end %>
+  </div>
+  
+    
+  <div class="col-md-4" id = "index-user-info">
+    <div class="card">
+      <div class="text-center">
+        <%= image_tag "https://www.thestylease.com/images/user.png", class: "card-img-top index-thumb" %>
+      </div>
+      
+      <div class="card-body">
+        <h5 class="card-title text-center"><%=link_to current_user.profile.name, current_user.profile  %></h5>
+        <p class="card-text text-right"><small class="text-muted"><%= current_user.email %></small></p>
+        <p class="card-text">
+          총 게시물 수: <%= current_user.posts.count %><br>
+          팔로워: <%= current_user.followers_count %><br>
+          팔로우: <%= current_user.follow_count %><br>
+        </p>
+      </div>
+    </div>
+    <br>
+    <% unless current_user.store.nil? %>
+      <div class="card">
+        <div class="text-center">
+          <%= image_tag "https://img.icons8.com/cotton/1600/online-store.png", class: "card-img-top index-thumb" %>
+        </div>
+        
+        <div class="card-body">
+          <h5 class="card-title text-center"><%= link_to current_user.store.name, current_user.store  %></h5>
+          <p class="card-text text-right"><small class="text-muted"><%= current_user.email %></small></p>
+          <p class="card-text">
+            총 게시물 수: <%= current_user.store.products.count %><br>
+            팔로워: <%= current_user.store.followers_count %><br>
+            
+          </p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+    
+</div>
+  
+
+
+

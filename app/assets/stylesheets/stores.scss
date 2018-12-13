@@ -1,3 +1,21 @@
 // Place all the styles related to the stores controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+#storeCarousel{
+     height: 20rem;
+     img {
+      top: 0;
+      left: 0;
+      min-width: 100%;
+      height: 20rem;
+    } 
+}
+
+.store-info{
+    text-align: center;
+    img{
+        display: inline-block;
+        width: 10rem;
+        height: 10rem;
+    }
+}

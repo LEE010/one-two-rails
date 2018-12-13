@@ -3,6 +3,8 @@ class Comment < ActiveRecord::Base
   include ActsAsCommentable::Comment
 
   belongs_to :commentable, :polymorphic => true
+  acts_as_votable
+  resourcify
 
   default_scope -> { order('created_at ASC') }
 

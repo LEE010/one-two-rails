@@ -1,6 +1,10 @@
 <h1>My Cart</h1>
-
-<%= @cart_items %>
+<div class="container">
+  <% flash.each do |key, value| %>
+    <div class="alert alert-danger"><%= value %></div>
+  <% end %>
+  
+</div>
 
 <table class="table">
   <thead>
@@ -46,6 +50,6 @@
 </div>
 
 <div id="payment-info">
-  <%= @total_price %> 원
-  <%= link_to "payment", new_payment_path, class: "btn btn-primary" %> 
+  <%= @total_price %> 원<br>
+  <%= link_to "payment", new_payment_path(@total_price), class: "btn"%> 
 </div>

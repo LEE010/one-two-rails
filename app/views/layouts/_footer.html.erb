@@ -1,15 +1,10 @@
 <% if user_signed_in? %>
-  <footer>
-    <nav class="navbar fixed-bottom navbar-expand-sm navbar-dark bg-dark d-flex justify-content-around">
-      <a class= "nav-item nav-link" href="/"><%=fa_icon "home"%></a>
-
-      <a class= "nav-item nav-link" href="/posts"><%=fa_icon "search"%></a>
-      <a class= "nav-item nav-link" href="#"><%=fa_icon "plus"%></a>
-      <a class= "nav-item nav-link" href="#"><%=fa_icon "heart"%></a>
-      
-      <% if current_user.profile.nil? %>
-        <%=link_to fa_icon("user"), new_profile_path(current_user.profile), class: "nav-item" %>
-      <% end %>
+  <footer id="nav-bottom" >
+    <nav class="navbar fixed-bottom navbar-expand-sm d-flex justify-content-around">
+      <%= link_to fa_icon("list-alt 2x"), index_path, class: "nav-item nav-link"  %>
+      <%= link_to fa_icon("search 2x"), search_path, class: "nav-item nav-link"  %>
+      <%= link_to fa_icon("archive 2x") , products_path, class: "nav-item nav-link"  %>
+      <%= link_to fa_icon("user 2x"), profile_path(current_user.profile), class: "nav-item nav-link" %>
     </nav>
   </footer>
 <% end %>

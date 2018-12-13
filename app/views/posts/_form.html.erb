@@ -1,0 +1,21 @@
+<%= bootstrap_form_for(post) do |f| %>
+  <div>
+    <%= f.text_field :content, class:"form-control", hide_label: true, placeholder:"글을 작성해 보세요" %>
+  </div>
+  <div>
+    <%= f.file_field :image, accept: 'image/jpeg, image/jpg image/png, image/gif', hide_label: true %>
+  </div>
+  <div class="text-right">
+    <%= f.submit "save", class: "btn btn-primary text-right" %>
+  </div>
+  
+<% end %>
+
+<script>
+    $('#post_image').on('change',function(){
+      //get the file name
+      var fileName = $(this).val().replace(/^.*[\\\/]/, '');
+      //replace the "Choose a file" label
+      $(this).next('.custom-file-label').html(fileName);
+            })
+</script>

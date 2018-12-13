@@ -2,8 +2,9 @@ class CreateProfiles < ActiveRecord::Migration[5.0]
   def change
     create_table :profiles do |t|
       t.string :name
+      t.string :image
       t.string :mobile
-      t.string :postcode
+      t.integer :postcode
       t.string :address
       t.string :address2
       t.date :birth

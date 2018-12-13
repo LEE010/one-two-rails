@@ -1,13 +1,13 @@
 class CartController < ApplicationController
   skip_before_filter :verify_authenticity_token
   before_action :set_cart, only: [:show, :create]
-  before_action :set_option_id, only: [:update, :create]
+  # before_action :set_option_id, only: [:update, :create]
+  # before_action :check_acount, only: [:create]
   
   
   def show
     @cart_items = session[:cart]
     @total_price = 0
- 
     @cart_items.each do |item_id, quantity|
       item = Option.find(item_id)
       @total_price += item.product.price.to_i * quantity.to_i
@@ -17,11 +17,11 @@ class CartController < ApplicationController
       format.js
       format.html
     end
+    
   end
   
   def create
-    
-    session[:cart][@option_id] = params["quantity"]
+    session[:cart]["#{option_id}"] = params["quantity"]
     redirect_to my_cart_url
   end
   
@@ -58,7 +58,22 @@ class CartController < ApplicationController
     session[:cart] = {} if session[:cart].nil?
   end
   
-  def set_option_id
-    @option_id = Product.find(params[:product_id]).options.where("option1 = ? AND option2 = ?",params[:option1],params[:option2]).first.id
+  def option_id
+    if params[:option1] == ''
+      @option1 = nil
+    else
+      @option1 = params[:option1]
+    end
+    
+    if params[:option2] == ''
+      @option2 = nil
+    else
+      @option2 = params[:option2]
+    end
+    
+    @option_id = Product.find(params[:product_id]).options.where(option1: @option1, option2: @option2).first.id
+    
   end
+  
+
 end

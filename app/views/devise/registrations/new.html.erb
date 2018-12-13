@@ -1,15 +1,16 @@
 <h1><%= t('.sign_up') %></h1>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+<%= bootstrap_form_for(resource, as: resource_name, url: registration_path(resource_name), html: {multipart: true}) do |f| %>
   <%= bootstrap_devise_error_messages! %>
-
+  <div class="invisible">
+    <%= resource.build_profile %>
+  </div>
+  <%= f.hidden_field :role, value: "user" %>
   <div class="form-group">
-    <%= f.label :email %>
     <%= f.email_field :email, autofocus: true, autocomplete: 'email', class: 'form-control' %>
   </div>
 
   <div class="form-group">
-    <%= f.label :password %>
     <%= f.password_field :password, autocomplete: 'current-password', class: 'form-control' %>
 
     <% if @minimum_password_length %>
@@ -18,9 +19,34 @@
   </div>
 
   <div class="form-group">
-    <%= f.label :password_confirmation %>
     <%= f.password_field :password_confirmation, autocomplete: 'current-password', class: 'form-control' %>
   </div>
+  
+  <%= f.fields_for :profile do |pf| %>
+  <div class="field">
+    <%= pf.text_field :name %>
+  </div>
+  
+  <div class="field">
+    <%= pf.file_field :image, accept: 'image/jpeg, image/jpg image/png, image/gif' %>
+  </div>
+  
+  <div class="field">
+    <%= pf.text_field :mobile %>
+  </div>
+  
+  <div class="field">
+    <%= pf.date_select :birth %>
+  </div>
+  
+  <div class="field form-group">
+    <%= pf.text_field :postcode, id:'postcode', class:"col-3", readonly: true %>
+    <input class="btn btn-primary inline" type="button" onclick="execDaumPostcode()" value="우편번호 찾기"><br>
+    <%= pf.text_field :address, id:'address', readonly: true %>
+    <%= pf.text_field :address2, id:'address2' %>
+  </div>
+
+  <% end %>
 
   <div class="form-group">
     <%= f.submit t('.sign_up'), class: 'btn btn-primary' %>
@@ -28,3 +54,55 @@
 <% end %>
 
 <%= render 'devise/shared/links' %>
+
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<script>
+    function execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var fullAddr = ''; // 최종 주소 변수
+                var extraAddr = ''; // 조합형 주소 변수
+
+                // 사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    fullAddr = data.roadAddress;
+
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    fullAddr = data.jibunAddress;
+                }
+
+                // 사용자가 선택한 주소가 도로명 타입일때 조합한다.
+                if(data.userSelectedType === 'R'){
+                    //법정동명이 있을 경우 추가한다.
+                    if(data.bname !== ''){
+                        extraAddr += data.bname;
+                    }
+                    // 건물명이 있을 경우 추가한다.
+                    if(data.buildingName !== ''){
+                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+                    // 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다.
+                    fullAddr += (extraAddr !== '' ? ' ('+ extraAddr +')' : '');
+                }
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('postcode').value = data.zonecode; //5자리 새우편번호 사용
+                document.getElementById('address').value = fullAddr;
+
+                // 커서를 상세주소 필드로 이동한다.
+                document.getElementById('address2').focus();
+            }
+        }).open();
+    }
+    
+    $('#user_profile_attributes_image').on('change',function(){
+      //get the file name
+      var fileName = $(this).val().replace(/^.*[\\\/]/, '');
+      //replace the "Choose a file" label
+      $(this).next('.custom-file-label').html(fileName);
+            })
+</script>

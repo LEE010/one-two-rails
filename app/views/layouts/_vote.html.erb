@@ -1,0 +1,15 @@
+
+<div class="container" id="vote">
+  <% unless current_user.voted_up_on?(votable) %>
+    <%= link_to fa_icon("heart-o 2x"), like_path(votable: votable.class, id: votable.id), method: :post %>
+  <% else %>
+    <%= link_to fa_icon("heart 2x"), unlike_path(votable: votable.class, id: votable.id), method: :delete %>
+  <% end %>
+  
+  <% unless current_user.voted_down_on?(votable) %>
+    <%= link_to fa_icon("thumbs-o-down 2x"), thumb_down_path(votable: votable.class, id: votable.id), method: :post %>
+  <% else %>
+    <%= link_to fa_icon("thumbs-down 2x"), thumb_up_path(votable: votable.class, id: votable.id), method: :delete %>
+  <% end %>
+  
+</div>
