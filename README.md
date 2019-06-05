@@ -1,3 +1,3 @@
 # one-two
-**ruby-on-rails**  
+**Ruby-on-Rails, Bootstrap**  
 https://one-two-test.herokuapp.com
