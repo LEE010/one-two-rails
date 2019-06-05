@@ -1,3 +1,3 @@
 # one-two
-*ruby-on-rails*
+**ruby-on-rails**  
 https://one-two-test.herokuapp.com
