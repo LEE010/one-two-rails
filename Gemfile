@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 ruby '2.4.1'
-gem 'sinatra', '1.0'
+gem 'sinatra', '2.2.3'
 
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
